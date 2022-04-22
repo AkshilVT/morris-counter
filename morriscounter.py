@@ -55,7 +55,9 @@ class MorrisCounter:
 
 
   # @property is a builtin function that creates and returns a property obect, has functions like fget(), fset(), fdel(), etc.
+  # count fuction returns value of counter 
   
+  # this function esitmates the count of the counter
   @property
   def count(self) -> float:
     return self.a ** (-1) * ((1 + self.a) ** self.X - 1)

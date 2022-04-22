@@ -9,20 +9,27 @@ from morriscounter import MorrisCounter
 def test(counter: MorrisCounter, n: int, axis: Axis) -> None:
   uppers, lowers, estimates, actuals = [], [], [], []
   for N in range(1, n+1):
+    # incrementing counter function 
     counter.increment()
     # assert (1-counter.epsilon)*N <= counter.count <= (1+counter.epsilon)*N
+
+    # Actual value of N
     actual = N
+    # estimate of the counter
     estimate = counter.count
+    # upper bound
     lower = (1-counter.epsilon)*N
+    # lower bound
     upper = (1+counter.epsilon)*N
 
+    # appending values in respective arrays.
     actuals.append(actual)
     estimates.append(estimate)
     lowers.append(lower)
     uppers.append(upper)
 
     # print(f"{actual=}, {estimate=:.8f} in [{lower:.8f}, {upper:.8f}]")
-
+  # Ploting parameters
   MARKER_SIZE=.01
   LINE_WIDTH=.5
   axis.plot(actuals, estimates, label="estimate", marker="o", color="green", markersize=MARKER_SIZE, linewidth=LINE_WIDTH)
@@ -33,11 +40,14 @@ def test(counter: MorrisCounter, n: int, axis: Axis) -> None:
   axis.axis('off')
 
 
-
+# Driver Code - ploting data gathered above
 if __name__ == '__main__':
   n = 10000
   bins = 5
+  # This utility wrapper makes it convenient to create common layouts of subplots, including the enclosing figure object, in a single call.
   fig, axes = plt.subplots(bins, bins)
+  # enumearate funciton creates objects with the list provided as argument
+  # linspace returns evenly spaced numbers over the limits passed as argument
   for r, accuracy in enumerate(np.linspace(.5, .95, bins)):
     for c, max_failure_rate in enumerate(np.linspace(0.05, .45, bins)):
       print(f"{accuracy=}, {max_failure_rate=}")
